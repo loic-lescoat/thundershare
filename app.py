@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, \
+        render_template, redirect, url_for
 
 app = Flask(__name__)
 
@@ -14,25 +15,9 @@ def cwd():
 
 
 @app.route("/")
-def hello_world():
-    return """
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload Form</title>
-</head>
-<body>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="file">Choose a file:</label>
-        <input type="file" id="file" name="file">
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-"""
+def home():
+    files = sorted(os.listdir(DIR))
+    return render_template("home.html", files=files)
 
 
 @app.route("/upload", methods=["POST"])
@@ -53,3 +38,15 @@ def download(filename):
     if not os.path.exists(full_path):
         return "file not found", 404
     return send_file(full_path)
+
+@app.route("/delete/<filename>", methods=["POST"])
+def delete(filename):
+    full_path = os.path.join(DIR, filename)
+    if not os.path.exists(full_path):
+        return "file not found", 404
+    os.remove(full_path)
+    return redirect(
+            url_for(
+                'home'
+                )
+            )
