@@ -21,8 +21,11 @@
         <form action="/delete/{{ file }}"
               method="POST"
               >
+              <button type="submit" formaction="/download/{{ file }}" formmethod="GET" formtarget="_blank">
+                      {{ file }}
+              </button>
               <button type="submit">
-                {{ file }}
+                Delete
               </button>
         </form>
       </li>
