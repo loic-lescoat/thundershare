@@ -1,10 +1,17 @@
 import os
 from flask import Flask, request, send_file, \
         render_template, redirect, url_for
+from collections import defaultdict
 
 app = Flask(__name__)
 
 DIR = "storage"
+
+messages=defaultdict(str)
+messages['upload'] = "Uploaded file"
+messages['delete'] = "Deleted file"
+messages['No file attached'] = 'No file attached'
+messages['No file chosen'] = 'No file chosen'
 
 
 def cwd():
@@ -17,19 +24,34 @@ def cwd():
 @app.route("/")
 def home():
     files = sorted(os.listdir(DIR))
-    return render_template("home.html", files=files)
+    return render_template("home.html", files=files, message=messages[request.args.get('action')])
 
 
 @app.route("/upload", methods=["POST"])
 def upload():
     if "file" not in request.files:
-        return "no file attached"
+        return redirect(
+                url_for(
+                    'home',
+                    action='No file attached'
+                    )
+                )
     file = request.files["file"]
     if file.filename == "":
-        return "no file chosen"
+        return redirect(
+                url_for(
+                    'home',
+                    action='No file chosen'
+                    )
+                )
 
     file.save(os.path.join(DIR, file.filename))
-    return "file saved"
+    return redirect(
+            url_for(
+                'home',
+                action='upload'
+                )
+            )
 
 
 @app.route("/download/<filename>")
@@ -47,6 +69,7 @@ def delete(filename):
     os.remove(full_path)
     return redirect(
             url_for(
-                'home'
+                'home',
+                action='delete'
                 )
             )
