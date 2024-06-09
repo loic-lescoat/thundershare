@@ -5,9 +5,9 @@
 Clone this repo, then run:
 
 ```
-# build
-make
+# build app
+make build
 
-# run
+# run app
 make run
 ```
