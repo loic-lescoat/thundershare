@@ -5,11 +5,16 @@ COPY requirements.txt .
 
 RUN python3 -m pip install -r requirements.txt
 
+ARG PORT
+ENV PORT=${PORT}
+
 COPY app.py .
 COPY Makefile .
 COPY templates/ templates/
 
-RUN mkdir storage
+ENV STORAGE_DIR=storage
 
-EXPOSE 8000
-CMD flask --app app run -h 0.0.0.0 -p 8000
+RUN mkdir $STORAGE_DIR
+
+EXPOSE $PORT
+CMD flask --app app run -h 0.0.0.0 -p $PORT

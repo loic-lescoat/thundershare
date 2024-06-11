@@ -5,7 +5,7 @@ from collections import defaultdict
 
 app = Flask(__name__)
 
-DIR = "storage"
+DIR = os.environ['STORAGE_DIR']
 
 messages=defaultdict(str)
 messages['upload'] = "Uploaded file"
