@@ -14,7 +14,5 @@ COPY templates/ templates/
 
 ENV STORAGE_DIR=storage
 
-RUN mkdir $STORAGE_DIR
-
 EXPOSE $PORT
 CMD flask --app app run -h 0.0.0.0 -p $PORT
