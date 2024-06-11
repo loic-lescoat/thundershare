@@ -6,4 +6,6 @@ PORT := 8000
 build:
 	docker build --build-arg PORT=$(PORT) -t $(container_name) .
 run:
-	docker run -p $(PORT):$(PORT) $(container_name)
+	docker run -p $(PORT):$(PORT) -v thundershare-volume:/deploy/storage $(container_name)
+
+
