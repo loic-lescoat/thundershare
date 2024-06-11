@@ -8,6 +8,7 @@
     <style>
 	#text_input {
 		height: 500px;
+		width: 800px;
 	}
     </style>
 </head>
@@ -18,7 +19,8 @@
         <input type="file" id="file" name="file"></input>
         <button type="submit">Upload</button>
 	<br>
-	<input id="text_input" type="text" hint="Save your text here"></input>
+  <input value="{{ user_text }}" id="text_input" type="text" name="text" placeholder="Save your text here"></input>
+  <button type="submit" formaction="/upload_text">Upload text</button>
     </form>
 
     {% if message %}
