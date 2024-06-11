@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload Form</title>
+    <style>
+	#text_input {
+		height: 500px;
+	}
+    </style>
 </head>
 <body>
   <h2>Upload a file</h2>
@@ -12,6 +17,8 @@
         <label for="file">Choose a file:</label>
         <input type="file" id="file" name="file"></input>
         <button type="submit">Upload</button>
+	<br>
+	<input id="text_input" type="text" hint="Save your text here"></input>
     </form>
 
     {% if message %}
