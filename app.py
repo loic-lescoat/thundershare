@@ -37,6 +37,9 @@ def home():
         message=messages[request.args.get("action")],
         user_text=user_text,
     )
+@app.route("/favicon.ico")
+def favicon():
+    return send_file("./favicon.ico")
 
 
 @app.route("/upload", methods=["POST"])
