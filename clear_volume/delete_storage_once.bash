@@ -1,1 +1,1 @@
-rm -v storage/*
+rm -v /storage/*
