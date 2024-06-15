@@ -5,4 +5,4 @@ container_name := $(notdir $(CURDIR))
 build:
 	docker build -t $(container_name) .
 run:
-	docker run -v thundershare-volume:/storage -it $(container_name)
+	docker run -v thundershare-volume:/storage -t $(container_name)
