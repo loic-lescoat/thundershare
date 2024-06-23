@@ -7,17 +7,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold underline mb-2">
+      Thundershare!
+    </h1>
+    <h2 class="text-lg mb-6">Share files across your network with ease</h2>
     
     <h2 class="text-xl font-semibold mb-4">Upload a file</h2>
     <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
-        <div>
-            <label for="file" class="block text-gray-700">Choose a file:</label>
-            <input type="file" id="file" name="file" class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500">
+        <div class="flex items-center space-x-4">
+            <div>
+                <input type="file" id="file" name="file" class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500">
+            </div>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Upload</button>
         </div>
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Upload</button>
         
         <div>
-            <textarea rows="10" name="text" placeholder="Save your text here" class="mt-4 w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ user_text }}</textarea>
+            <textarea rows="10" cols="80" name="text" placeholder="Save your text here" class="mt-4 w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ user_text }}</textarea>
         </div>
         <button type="submit" formaction="/upload_text" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700">Upload text</button>
     </form>
