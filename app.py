@@ -81,12 +81,7 @@ def upload_text():
     with open(os.path.join(DIR, TEXT_STORE), "w") as f:
         f.write(new_text)
 
-    return redirect(
-        url_for(
-            "home",
-            action="upload_text",
-        )
-    )
+    return "Text updated successfully", 500
 
 
 @app.route("/download/<filename>")
