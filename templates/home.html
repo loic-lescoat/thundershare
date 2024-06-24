@@ -7,39 +7,43 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/src/home.js" defer></script>
 </head>
-<body class="bg-gray-100 p-6">
-    <h1 id="title" class="text-3xl font-bold underline mb-2">
-      Thundershare!
-    </h1>
-    <h2 class="text-lg mb-6">Share files across your network with ease</h2>
+<body class="bg-gray-100 p-6 flex items-center">
+    <div class="w-1/4 h-full"></div>
+    <div id="main_content" class="flex-1">
+      <h1 id="title" class="text-3xl font-bold underline mb-2">
+        Thundershare!
+      </h1>
+      <h2 class="text-lg mb-6">Share files across your network with ease</h2>
 
-    <h1 id="notification_message" class="invisible h-20"></h1>
-    
-    <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
-        <div class="flex items-center space-x-4">
-            <h2 class="text-xl font-semibold">Upload a file</h2>
-            <div>
-                <input type="file" id="file" name="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500">
-            </div>
-            <button id="upload_file" type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Upload</button>
-        </div>
-        
-        <div>
-            <textarea id="text_input" rows="10" cols="80" name="text" placeholder="Save your text here" class="mt-4 w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ user_text }}</textarea>
-        </div>
-        <button id="upload_text" type="button" formaction="/upload_text" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700">Upload text</button>
-    </form>
+      <h1 id="notification_message" class="invisible h-20"></h1>
+      
+      <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
+          <div class="flex items-center space-x-4">
+              <h2 class="text-xl font-semibold">Upload a file</h2>
+              <div>
+                  <input type="file" id="file" name="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500">
+              </div>
+              <button id="upload_file" type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Upload</button>
+          </div>
+          
+          <div>
+              <textarea id="text_input" rows="10" cols="80" name="text" placeholder="Save your text here" class="mt-4 w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ user_text }}</textarea>
+          </div>
+          <button id="upload_text" type="button" formaction="/upload_text" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700">Upload text</button>
+      </form>
 
-    <h2 class="text-xl font-semibold mt-8 mb-4">Files</h2>
-    <ul class="space-y-2">
-        {% for file in files %}
-            <li>
-                <form action="/delete/{{ file }}" method="POST" class="flex space-x-2 items-center">
-                    <button type="submit" formaction="/download/{{ file }}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">{{ file }}</button>
-                    <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">Delete</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+      <h2 class="text-xl font-semibold mt-8 mb-4">Files</h2>
+      <ul class="space-y-2">
+          {% for file in files %}
+              <li>
+                  <form action="/delete/{{ file }}" method="POST" class="flex space-x-2 items-center">
+                      <button type="submit" formaction="/download/{{ file }}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">{{ file }}</button>
+                      <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">Delete</button>
+                  </form>
+              </li>
+          {% endfor %}
+      </ul>
+    </div>
+    <div class="w-1/4 h-full"></div>
 </body>
 </html>
