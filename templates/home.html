@@ -13,9 +13,7 @@
     </h1>
     <h2 class="text-lg mb-6">Share files across your network with ease</h2>
 
-    {% if message %}
-        <h1 id="notification_message" class="invisible h-20">{{ message }}</h1>
-    {% endif %}
+    <h1 id="notification_message" class="invisible h-20"></h1>
     
     <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
         <div class="flex items-center space-x-4">
@@ -37,7 +35,7 @@
         {% for file in files %}
             <li>
                 <form action="/delete/{{ file }}" method="POST" class="flex space-x-2 items-center">
-                    <button type="submit" formaction="/download/{{ file }}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700">{{ file }}</button>
+                    <button type="submit" formaction="/download/{{ file }}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">{{ file }}</button>
                     <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">Delete</button>
                 </form>
             </li>

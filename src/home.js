@@ -54,7 +54,7 @@ document.getElementById('upload_file').addEventListener('click', function() {
       my_alert(error.message, false)
     })
   } else {
-    alert("select a file")
+    my_alert("select a file", false)
   }
 })
 

@@ -16,13 +16,6 @@ TEXT_STORE = "TEXT_STORE"
 
 DIR = os.environ["STORAGE_DIR"]
 
-messages = defaultdict(str)
-messages["upload"] = "Uploaded file"
-messages["delete"] = "Deleted file"
-messages["No file attached"] = "No file attached"
-messages["No file chosen"] = "No file chosen"
-messages["upload_text"] = "Text updated"
-
 
 def cwd():
     """
@@ -42,7 +35,6 @@ def home():
     return render_template(
         "home.html",
         files=files,
-        message=messages[request.args.get("action")],
         user_text=user_text,
     )
 
