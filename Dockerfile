@@ -10,7 +10,9 @@ ENV PORT=${PORT}
 
 COPY app.py .
 COPY Makefile .
+COPY favicon.ico .
 COPY templates/ templates/
+COPY src/ src/
 
 ENV STORAGE_DIR=storage
 

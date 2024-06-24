@@ -1,5 +1,13 @@
 import os
-from flask import Flask, request, send_file, render_template, redirect, url_for
+from flask import (
+    Flask,
+    request,
+    send_from_directory,
+    send_file,
+    render_template,
+    redirect,
+    url_for,
+)
 from collections import defaultdict
 
 app = Flask(__name__)
@@ -37,21 +45,33 @@ def home():
         message=messages[request.args.get("action")],
         user_text=user_text,
     )
+
+
 @app.route("/favicon.ico")
 def favicon():
     return send_file("./favicon.ico")
 
 
+@app.route("/src/<path:filename>")
+def serve_src(filename: str):
+    directory = os.path.join(app.root_path, "src")
+
+    if os.path.isfile(os.path.join(directory, filename)):
+        return send_from_directory(directory, filename)
+    else:
+        return "file not found", 404
+
+
 @app.route("/upload", methods=["POST"])
 def upload():
     if "file" not in request.files:
-        return redirect(url_for("home", action="No file attached"))
+        return "No file attached"
     file = request.files["file"]
     if file.filename == "":
-        return redirect(url_for("home", action="No file chosen"))
+        return "No file chosen"
 
     file.save(os.path.join(DIR, file.filename))
-    return redirect(url_for("home", action="upload"))
+    return "File uploaded successfully"
 
 
 @app.route("/upload_text", methods=["POST"])
