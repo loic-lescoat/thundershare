@@ -53,6 +53,8 @@ document.getElementById('upload_file').addEventListener('click', function() {
     .catch(error => {
       my_alert(error.message, false)
     })
+
+    document.getElementById("upload_file_form").reset()
   } else {
     my_alert("select a file", false)
   }
