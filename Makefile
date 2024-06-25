@@ -11,6 +11,11 @@ run:
 # TODO don't hardcode storage dir
 enter:
 	docker run -v thundershare-volume:/deploy/storage -it $(container_name) bash
+kill:
+	docker kill `docker ps -q --filter "ancestor=$(container_name)"`
+	sleep 1 # may get "port already allocated" error without this
+	$(MAKE) build
+	$(MAKE) run
 
 	
 
