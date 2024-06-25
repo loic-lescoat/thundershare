@@ -79,21 +79,17 @@ document.getElementById('upload_text').addEventListener('click', function() {
 
 })
 
-function delete_file(filename){
+async function delete_file(filename){
 
-  fetch(`/delete/${filename}`, {
+  var success_status = true
+  response = await fetch(`/delete/${filename}`, {
     method: "POST"
   })
-  .then(
-    function(response){
-      if (response.status == 200){
-        my_alert(response.text(), true)
-      } else {
-        my_alert(response.text(), false)
-      }
-      update_list_of_files()
-    }
-  )
+
+  text = await response.text()
+
+  my_alert(text, response.status == 200)
+  update_list_of_files()
 
 }
 
