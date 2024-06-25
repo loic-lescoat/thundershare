@@ -86,11 +86,9 @@ function update_list_of_files(){
   .then(
     data => {
       stored_files = document.getElementById("stored_files")
-      console.log("data is", data)
 
 
       var list_items_html = data.map(function(file){
-        console.log("file is", file)
         return `
               <li>
                   <form action="/delete/${file}" method="POST" class="flex space-x-2 items-center">

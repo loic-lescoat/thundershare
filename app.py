@@ -78,7 +78,7 @@ def upload_text():
     with open(os.path.join(DIR, TEXT_STORE), "w") as f:
         f.write(new_text)
 
-    return "Text updated successfully", 500
+    return "Text updated successfully"
 
 
 @app.route("/download/<filename>")
