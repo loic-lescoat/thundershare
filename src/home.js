@@ -79,6 +79,24 @@ document.getElementById('upload_text').addEventListener('click', function() {
 
 })
 
+function delete_file(filename){
+
+  fetch(`/delete/${filename}`, {
+    method: "POST"
+  })
+  .then(
+    function(response){
+      if (response.status == 200){
+        my_alert(response.text(), true)
+      } else {
+        my_alert(response.text(), false)
+      }
+      update_list_of_files()
+    }
+  )
+
+}
+
 function update_list_of_files(){
   // get stored files on backend
   fetch("/get_stored_files", {})
@@ -91,9 +109,9 @@ function update_list_of_files(){
       var list_items_html = data.map(function(file){
         return `
               <li>
-                  <form action="/delete/${file}" method="POST" class="flex space-x-2 items-center">
+                  <form method="POST" class="flex space-x-2 items-center">
                       <button type="submit" formaction="/download/${file}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">${file}</button>
-                      <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">Delete</button>
+                      <button type="button" onclick="delete_file('${file}')" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">Delete</button>
                   </form>
               </li>
         `

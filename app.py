@@ -93,9 +93,9 @@ def download(filename):
 def delete(filename):
     full_path = os.path.join(DIR, filename)
     if not os.path.exists(full_path):
-        return "file not found", 404
+        return "File not found", 404
     os.remove(full_path)
-    return redirect(url_for("home", action="delete"))
+    return "File deleted"
 
 
 @app.route("/get_stored_files")
