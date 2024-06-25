@@ -107,4 +107,5 @@ function update_list_of_files(){
   ) // don't bother catching
 }
 
-
+// main
+update_list_of_files()

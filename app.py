@@ -25,13 +25,14 @@ def cwd():
     """
     return os.path.dirname(os.path.realpath(__file__))
 
+
 def _get_stored_files() -> List[str]:
     files = sorted((x for x in os.listdir(DIR) if x != TEXT_STORE))
     return files
 
+
 @app.route("/")
 def home():
-    files = _get_stored_files()
     if os.path.exists(os.path.join(DIR, TEXT_STORE)):
         with open(os.path.join(DIR, TEXT_STORE)) as f:
             user_text = f.read()
@@ -39,7 +40,6 @@ def home():
         user_text = ""
     return render_template(
         "home.html",
-        files=files,
         user_text=user_text,
     )
 
@@ -96,6 +96,7 @@ def delete(filename):
         return "file not found", 404
     os.remove(full_path)
     return redirect(url_for("home", action="delete"))
+
 
 @app.route("/get_stored_files")
 def get_stored_files():
