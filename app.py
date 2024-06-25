@@ -9,6 +9,8 @@ from flask import (
     url_for,
 )
 from collections import defaultdict
+from typing import List
+import json
 
 app = Flask(__name__)
 
@@ -23,10 +25,13 @@ def cwd():
     """
     return os.path.dirname(os.path.realpath(__file__))
 
+def _get_stored_files() -> List[str]:
+    files = sorted((x for x in os.listdir(DIR) if x != TEXT_STORE))
+    return files
 
 @app.route("/")
 def home():
-    files = sorted((x for x in os.listdir(DIR) if x != TEXT_STORE))
+    files = _get_stored_files()
     if os.path.exists(os.path.join(DIR, TEXT_STORE)):
         with open(os.path.join(DIR, TEXT_STORE)) as f:
             user_text = f.read()
@@ -91,3 +96,8 @@ def delete(filename):
         return "file not found", 404
     os.remove(full_path)
     return redirect(url_for("home", action="delete"))
+
+@app.route("/get_stored_files")
+def get_stored_files():
+    files = _get_stored_files()
+    return json.dumps(files)

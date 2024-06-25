@@ -22,7 +22,6 @@ function my_alert(message, success){
   }
   new_style = new_style.split(" ")
 
-  console.log(new_style)
 
   toggle_all(notificationElement, new_style)
 
@@ -48,6 +47,7 @@ document.getElementById('upload_file').addEventListener('click', function() {
     })
     .then(response => response.text())
     .then(data => {
+      update_list_of_files()
       my_alert(data, true)
     })
     .catch(error => {
@@ -78,5 +78,33 @@ document.getElementById('upload_text').addEventListener('click', function() {
   })
 
 })
+
+function update_list_of_files(){
+  // get stored files on backend
+  fetch("/get_stored_files", {})
+  .then(response => response.json())
+  .then(
+    data => {
+      stored_files = document.getElementById("stored_files")
+      console.log("data is", data)
+
+
+      var list_items_html = data.map(function(file){
+        console.log("file is", file)
+        return `
+              <li>
+                  <form action="/delete/${file}" method="POST" class="flex space-x-2 items-center">
+                      <button type="submit" formaction="/download/${file}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">${file}</button>
+                      <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">Delete</button>
+                  </form>
+              </li>
+        `
+      }).join("\n")
+
+      stored_files.innerHTML = list_items_html
+
+    }
+  ) // don't bother catching
+}
 
 
