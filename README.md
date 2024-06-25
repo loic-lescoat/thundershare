@@ -1,4 +1,4 @@
-# Thundershare - share files over your LAN
+# Thundershare ⚡ Share files over your LAN
 
 # Usage
 
@@ -16,4 +16,6 @@ make build
 
 # run app
 make run
+
+# access the app at <machine ip>:8000
 ```
