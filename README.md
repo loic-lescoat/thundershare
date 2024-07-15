@@ -24,11 +24,10 @@ knowing your files are safe.
 Clone this repo, then run:
 
 ```
+export PORT=8000 # tweak this value as needed
 # build app
 make build
-
 # run app
 make run
-
-# access the app at <machine ip>:8000
+# access the app at <machine ip>:$PORT
 ```
