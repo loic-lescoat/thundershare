@@ -1,10 +1,11 @@
-# TODO don't hardcode name of volume
+# TODO don't hardcode volume
 # set container name to be equal to name of directory of project
 container_name := $(notdir $(CURDIR))
+PORT := 8000
 
-build: port_def
+build:
 	docker build --build-arg PORT=$(PORT) -t $(container_name) .
-run: port_def
+run:
 	docker run -d -p $(PORT):$(PORT) -v thundershare-volume:/deploy/storage $(container_name)
 
 # TODO don't hardcode storage dir
@@ -16,11 +17,6 @@ kill:
 	$(MAKE) build
 	$(MAKE) run
 
-port_def:
-ifndef PORT
-		$(error PORT is not set. Please set this environment variable before running the target.)
-endif
-	echo "PORT is $$PORT"
 	
 
 
