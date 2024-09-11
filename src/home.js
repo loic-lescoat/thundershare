@@ -121,5 +121,15 @@ function update_list_of_files(){
   ) // don't bother catching
 }
 
+document.getElementById('copy_text').addEventListener('click', function() {
+  // copies content of text input to clipboard
+    var text_input = document.getElementById("text_input");
+    text_input.select();
+    document.execCommand("copy");
+  console.log("copyied")
+  my_alert("Text copied!", true);
+}
+)
+
 // main
 update_list_of_files()

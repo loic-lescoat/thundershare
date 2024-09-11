@@ -5,9 +5,6 @@ COPY requirements.txt .
 
 RUN python3 -m pip install -r requirements.txt
 
-ARG PORT
-ENV PORT=${PORT}
-
 COPY app.py .
 COPY Makefile .
 COPY favicon.ico .
@@ -16,5 +13,8 @@ COPY src/ src/
 
 ENV STORAGE_DIR=storage
 
+ARG PORT
+ENV PORT=${PORT}
 EXPOSE $PORT
+
 CMD flask --app app run -h 0.0.0.0 -p $PORT

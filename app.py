@@ -5,10 +5,7 @@ from flask import (
     send_from_directory,
     send_file,
     render_template,
-    redirect,
-    url_for,
 )
-from collections import defaultdict
 from typing import List
 import json
 
