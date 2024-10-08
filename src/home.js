@@ -5,6 +5,10 @@ function toggle_all(element, classes_to_toggle){
   }
 }
 
+// x is: {{ x }}
+// {{ url_for('thundershare.home') }}
+// {{ url_for('thundershare.delete', filename='') }}
+
 function my_alert(message, success){
   // TODO use success
 
@@ -41,7 +45,7 @@ document.getElementById('upload_file').addEventListener('click', function() {
     const form_data = new FormData()
     form_data.append("file", file)
 
-    fetch("/upload", {
+    fetch("{{ url_for('thundershare.upload') }}", {
       method: 'POST',
       body: form_data
     })
@@ -65,7 +69,7 @@ document.getElementById('upload_text').addEventListener('click', function() {
   data = new URLSearchParams()
   data.append("text", file_input)
 
-  fetch("/upload_text", {
+  fetch("{{ url_for('thundershare.upload_text') }}", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -84,7 +88,7 @@ document.getElementById('upload_text').addEventListener('click', function() {
 async function delete_file(filename){
 
   var success_status = true
-  response = await fetch(`/delete/${filename}`, {
+  response = await fetch("{{ url_for('thundershare.delete', filename='') }}" + filename, {
     method: "POST"
   })
 
@@ -97,7 +101,7 @@ async function delete_file(filename){
 
 function update_list_of_files(){
   // get stored files on backend
-  fetch("/get_stored_files", {})
+  fetch("{{ url_for('thundershare.get_stored_files') }}", {})
   .then(response => response.json())
   .then(
     data => {
@@ -108,7 +112,7 @@ function update_list_of_files(){
         return `
               <li>
                   <form method="POST" class="flex space-x-2 items-center">
-                      <button type="submit" formaction="/download/${file}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">${file}</button>
+                      <button type="submit" formaction="{{ url_for('thundershare.download', filename='') }}${file}" formmethod="GET" formtarget="_blank" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">${file}</button>
                       <button type="button" onclick="delete_file('${file}')" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700">Delete</button>
                   </form>
               </li>

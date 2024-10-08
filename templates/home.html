@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- hi! cicd worked-->
+<!-- {{ url_for('thundershare.serve_src', filename='home.js') }}-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thundershare</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/src/home.js" defer></script>
+    <script src="{{ url_for('thundershare.serve_src', filename='home.js') }}" defer></script>
 </head>
 <body class="bg-gray-100 p-6 flex items-center">
     <div class="md:w-1/6 lg:w-1/4 w-0 h-full"></div>
@@ -18,7 +18,7 @@
 
       <h1 id="notification_message" class="invisible h-20"></h1>
       
-      <form id="upload_file_form" action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
+      <form id="upload_file_form" action="{{ url_for('thundershare.upload') }}" method="post" enctype="multipart/form-data" class="space-y-4">
           <div class="flex items-center space-x-4">
               <h2 class="text-xl font-semibold">Upload a file</h2>
               <div>

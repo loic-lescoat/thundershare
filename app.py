@@ -1,10 +1,13 @@
 import os
 from flask import (
     Flask,
+    Blueprint,
     request,
     send_from_directory,
     send_file,
     render_template,
+    render_template_string,
+    make_response,
 )
 from typing import List
 import json
@@ -14,6 +17,8 @@ app = Flask(__name__)
 TEXT_STORE = "TEXT_STORE"
 
 DIR = os.environ["STORAGE_DIR"]
+
+bp = Blueprint("thundershare", __name__, url_prefix="/thundershare")
 
 
 def cwd():
@@ -28,7 +33,7 @@ def _get_stored_files() -> List[str]:
     return files
 
 
-@app.route("/")
+@bp.route("/")
 def home():
     if os.path.exists(os.path.join(DIR, TEXT_STORE)):
         with open(os.path.join(DIR, TEXT_STORE)) as f:
@@ -41,22 +46,30 @@ def home():
     )
 
 
-@app.route("/favicon.ico")
+@bp.route("/favicon.ico")
 def favicon():
     return send_file("./favicon.ico")
 
 
-@app.route("/src/<path:filename>")
+@bp.route("/src/<path:filename>")
 def serve_src(filename: str):
     directory = os.path.join(app.root_path, "src")
 
-    if os.path.isfile(os.path.join(directory, filename)):
-        return send_from_directory(directory, filename)
+    full_path = os.path.join(directory, filename)
+    if os.path.isfile(full_path):
+        # ignore race condition
+        with open(full_path, "r") as f:
+            contents = f.read()
+        content = render_template_string(contents, x="hi from here!!!")
+        response = make_response(content)
+        response.mimetype = "application/javascript"
+        return response
+
     else:
         return "file not found", 404
 
 
-@app.route("/upload", methods=["POST"])
+@bp.route("/upload", methods=["POST"])
 def upload():
     if "file" not in request.files:
         return "No file attached"
@@ -68,7 +81,7 @@ def upload():
     return "File uploaded successfully"
 
 
-@app.route("/upload_text", methods=["POST"])
+@bp.route("/upload_text", methods=["POST"])
 def upload_text():
     new_text = request.form.get("text")
 
@@ -78,7 +91,7 @@ def upload_text():
     return "Text updated successfully"
 
 
-@app.route("/download/<filename>")
+@bp.route("/download/<filename>")
 def download(filename):
     full_path = os.path.join(DIR, filename)
     if not os.path.exists(full_path):
@@ -86,7 +99,7 @@ def download(filename):
     return send_file(full_path)
 
 
-@app.route("/delete/<filename>", methods=["POST"])
+@bp.route("/delete/<filename>", methods=["POST"])
 def delete(filename):
     full_path = os.path.join(DIR, filename)
     if not os.path.exists(full_path):
@@ -95,7 +108,10 @@ def delete(filename):
     return "File deleted"
 
 
-@app.route("/get_stored_files")
+@bp.route("/get_stored_files")
 def get_stored_files():
     files = _get_stored_files()
     return json.dumps(files)
+
+
+app.register_blueprint(bp)
