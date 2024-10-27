@@ -66,6 +66,9 @@ document.getElementById('upload_file').addEventListener('click', function() {
 
 document.getElementById('upload_text').addEventListener('click', function() {
   const file_input = document.getElementById("text_input").value
+
+  update_links(file_input)
+
   data = new URLSearchParams()
   data.append("text", file_input)
 
@@ -124,6 +127,40 @@ function update_list_of_files(){
     }
   ) // don't bother catching
 }
+
+function get_links(text){
+  // Updated regex pattern with stricter boundaries
+  const pattern = /\b((?:https?:\/\/(?:[a-z0-9%._\-]+))+\.[a-z]{2,})(?:\/[^\s]*)?\b/gi;
+
+  // Find all URLs
+  const urls = text.match(pattern);
+
+  console.log("urls is");
+  console.log(urls); // Expected output: ['https://www.example.com', 'http://example.net']
+
+  return urls;
+}
+
+function update_links(text){
+  var container = document.getElementById(
+    "links_container"
+  );
+  const links = get_links(text);
+  console.log("links is", links);
+
+  container.innerHTML = "<ul>";
+    console.log("st");
+  for(let i = 0; i < links.length; i++){
+    var elem = links[i];
+    console.log(elem);
+    const template = '<li><a href="link" class="text-blue-500 hover:text-blue-700 focus:text-blue-700">link</a></li>';
+    const to_add = template.replace(/link/g, elem);
+    container.innerHTML = container.innerHTML + to_add;
+  }
+  container.innerHTML = container.innerHTML + "</ul>";
+}
+
+
 
 document.getElementById('copy_text').addEventListener('click', function() {
   // copies content of text input to clipboard

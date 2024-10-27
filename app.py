@@ -10,6 +10,8 @@ from flask import (
 )
 from typing import List
 import json
+from constants import URL_REGEX
+import re
 
 app = Flask(__name__)
 
@@ -39,9 +41,12 @@ def home():
             user_text = f.read()
     else:
         user_text = ""
+
+    links = re.findall(URL_REGEX, user_text)
     return render_template(
         "home.html",
         user_text=user_text,
+        links=links,
     )
 
 
