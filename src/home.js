@@ -135,9 +135,6 @@ function get_links(text){
   // Find all URLs
   const urls = text.match(pattern);
 
-  console.log("urls is");
-  console.log(urls); // Expected output: ['https://www.example.com', 'http://example.net']
-
   return urls;
 }
 
@@ -146,11 +143,10 @@ function update_links(text){
     "links_container"
   );
   const links = get_links(text);
-  console.log("links is", links);
 
   container.innerHTML = "<ul>";
     console.log("st");
-  for(let i = 0; i < links.length; i++){
+  for(let i = 0; links != null && i < links.length; i++){
     var elem = links[i];
     console.log(elem);
     const template = '<li><a href="link" class="text-blue-500 hover:text-blue-700 focus:text-blue-700">link</a></li>';
