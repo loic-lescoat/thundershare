@@ -18,6 +18,7 @@ app = Flask(__name__)
 TEXT_STORE = "TEXT_STORE"
 
 DIR = os.environ["STORAGE_DIR"]
+os.makedirs(DIR, exist_ok=True)
 
 bp = Blueprint("thundershare", __name__, url_prefix="/thundershare")
 
