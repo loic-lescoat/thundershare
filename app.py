@@ -12,6 +12,7 @@ from typing import List
 import json
 from constants import URL_REGEX
 import re
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -82,7 +83,13 @@ def upload():
     if file.filename == "":
         return "No file chosen"
 
-    file.save(os.path.join(DIR, file.filename))
+    destination = os.path.join(DIR, secure_filename(file.filename))
+    assert "." in destination  # assumption
+    while os.path.exists(destination):
+        # prevent overwriting of file if exists by changing its savename
+        base, ext = destination.rsplit(".", 1)
+        destination = base + "_copy." + ext
+    file.save(destination)
     return "File uploaded successfully"
 
 

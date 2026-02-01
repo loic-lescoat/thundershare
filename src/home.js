@@ -37,7 +37,7 @@ setTimeout(() => {
     alert_timeout);
 }
 
-document.getElementById('upload_file').addEventListener('click', function() {
+document.getElementById('file').addEventListener('change', function() {
   const file_input = document.getElementById("file")
   const file = file_input.files[0]
 
