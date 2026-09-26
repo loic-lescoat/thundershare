@@ -108,7 +108,7 @@ def download(filename):
     full_path = os.path.join(DIR, filename)
     if not os.path.exists(full_path):
         return "file not found", 404
-    return send_file(full_path)
+    return send_file(full_path, as_attachment=True)
 
 
 @bp.route("/delete/<filename>", methods=["POST"])
